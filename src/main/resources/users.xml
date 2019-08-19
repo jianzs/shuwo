@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user>
+        <name>John Snow</name>
+        <phone>1234567890</phone>
+        <password>8888888</password>
+        <seatId>1</seatId>
+        <offset>20607</offset>
+        <deviceId>357e947fe071e3b7</deviceId>
+        <enabled>true</enabled>
+    </user>
+</users>
