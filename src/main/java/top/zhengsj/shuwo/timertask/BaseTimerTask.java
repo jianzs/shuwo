@@ -22,6 +22,7 @@ public abstract class BaseTimerTask extends TimerTask {
 
         List<Thread> threads = new ArrayList<>();
         for (UserEntity user: users) {
+            if (!user.getEnabled()) continue;
             Thread thread = new Thread(getThread(user));
             thread.start();
             threads.add(thread);

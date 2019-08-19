@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlType;
         "phone",
         "password",
         "seatId",
+        "offset",
         "deviceId",
         "enabled",
         "userId",
