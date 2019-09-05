@@ -8,5 +8,8 @@
         <offset>20607</offset>
         <deviceId>357e947fe071e3b7</deviceId>
         <enabled>true</enabled>
+        <addEnabled>true</addEnabled>
+        <affirmEnabled>true</affirmEnabled>
+        <releaseEnabled>true</releaseEnabled>
     </user>
 </users>

@@ -19,7 +19,7 @@ public class AffirmThread implements Runnable {
 
     @Override
     public void run() {
-        if (user == null || !user.getEnabled()) return;
+        if (user == null || !user.getEnabled() || !user.getAffirmEnabled()) return;
         System.out.println(new Date().toString());
 
 

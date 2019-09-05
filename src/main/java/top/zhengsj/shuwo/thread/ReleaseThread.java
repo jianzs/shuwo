@@ -20,7 +20,7 @@ public class ReleaseThread implements Runnable {
 
     @Override
     public void run() {
-        if (user == null || !user.getEnabled()) return;
+        if (user == null || !user.getEnabled() || !user.getReleaseEnabled()) return;
         System.out.println(new Date().toString());
 
         ShuwoUtil shuwoUtil = new ShuwoUtil();

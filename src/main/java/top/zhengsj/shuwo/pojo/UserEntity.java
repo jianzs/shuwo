@@ -17,6 +17,9 @@ import javax.xml.bind.annotation.XmlType;
         "offset",
         "deviceId",
         "enabled",
+        "addEnabled",
+        "affirmEnabled",
+        "releaseEnabled",
         "userId",
         "token",
         "newSeatAppointmentId",
@@ -30,7 +33,10 @@ public class UserEntity {
     private String token;
     private String deviceId;
     private Integer seatId;
-    private Boolean enabled;
+    private Boolean enabled = false;
+    private Boolean addEnabled = true;
+    private Boolean affirmEnabled = true;
+    private Boolean releaseEnabled = true;
     private Integer offset;
 
     private String newSeatAppointmentId;
@@ -45,6 +51,30 @@ public class UserEntity {
         this.password = password;
         this.deviceId = deviceId;
         this.seatId = seatId;
+    }
+
+    public Boolean getAddEnabled() {
+        return addEnabled;
+    }
+
+    public void setAddEnabled(Boolean addEnabled) {
+        this.addEnabled = addEnabled;
+    }
+
+    public Boolean getAffirmEnabled() {
+        return affirmEnabled;
+    }
+
+    public void setAffirmEnabled(Boolean affirmEnabled) {
+        this.affirmEnabled = affirmEnabled;
+    }
+
+    public Boolean getReleaseEnabled() {
+        return releaseEnabled;
+    }
+
+    public void setReleaseEnabled(Boolean releaseEnabled) {
+        this.releaseEnabled = releaseEnabled;
     }
 
     public Boolean getEnabled() {
