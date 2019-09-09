@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
         "phone",
         "password",
         "seatId",
-        "offset",
+        "roomId",
         "deviceId",
         "enabled",
         "addEnabled",
@@ -37,7 +37,7 @@ public class UserEntity {
     private Boolean addEnabled = true;
     private Boolean affirmEnabled = true;
     private Boolean releaseEnabled = true;
-    private Integer offset;
+    private Integer roomId;
 
     private String newSeatAppointmentId;
     private String oldSeatAppointmentId;
@@ -81,12 +81,12 @@ public class UserEntity {
         return enabled;
     }
 
-    public Integer getOffset() {
-        return offset;
+    public Integer getRoomId() {
+        return roomId;
     }
 
-    public void setOffset(Integer offset) {
-        this.offset = offset;
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
     }
 
     public void setEnabled(Boolean enabled) {

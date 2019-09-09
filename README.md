@@ -23,7 +23,7 @@ $ ./start.sh
 ```
 
 ## 注意事项
-* 必填项包括 name、phone、password、seatId、offset、deviceId、enabled 
+* 必填项包括 name、phone、password、seatId、roomId、deviceId、enabled 
 * seatId 为座位号
 * offset 见下表 参数信息
 * deviceId 为长度为16的字母数字混合字符串，任意两个账户不可共用同一个 deviceId
@@ -42,13 +42,13 @@ $ ./start.sh
 南馆 buildingId 8  
 北馆 buildingId 33  
 
-| 名称           | roomId | offset |
-| -------------- | ------ | ------ |
-| A201           | 19     | 20607  |
-| A202           | 20     | 21034  |
-| A302           | 21     | 21388  |
-| B308电子阅览室 | 67     | 10811  |
-| B208           | 36     | 3935   |
+| 名称           | roomId | 
+| -------------- | ------ |
+| A201           | 19     |
+| A202           | 20     |
+| A302           | 21     |
+| B308电子阅览室 | 67     |
+| B208           | 36     |
 
 参数并不全，如果没有想要房间的参数，可以使用 Postman 通过接口文档中接口进行查询，或者提出 issue。
 

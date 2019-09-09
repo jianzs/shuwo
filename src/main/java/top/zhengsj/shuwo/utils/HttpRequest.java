@@ -32,4 +32,30 @@ public class HttpRequest {
 
         return new JSONObject(response.body().string());
     }
+
+    public JSONObject sendGet(String url, Map<String, Object> content) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        StringBuilder urlBuilder = new StringBuilder(url);
+
+        boolean isFirst = true;
+        for (Map.Entry<String, Object> item : content.entrySet()) {
+            urlBuilder.append(isFirst ? "?" : "&")
+                    .append(item.getKey()).append("=").append(item.getValue());
+            isFirst = false;
+        }
+        url = urlBuilder.toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) {
+            throw new IOException("服务器端错误: " + response);
+        }
+
+        return new JSONObject(response.body().string());
+    }
 }
