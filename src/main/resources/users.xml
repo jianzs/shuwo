@@ -5,7 +5,7 @@
         <phone>1234567890</phone>
         <password>8888888</password>
         <seatId>1</seatId>
-        <offset>20607</offset>
+        <roomId>20607</roomId>
         <deviceId>357e947fe071e3b7</deviceId>
         <enabled>true</enabled>
         <addEnabled>true</addEnabled>

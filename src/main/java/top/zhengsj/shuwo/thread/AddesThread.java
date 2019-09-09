@@ -2,10 +2,7 @@ package top.zhengsj.shuwo.thread;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import top.zhengsj.shuwo.exception.AddesFailedException;
-import top.zhengsj.shuwo.exception.IncompleteInfoException;
-import top.zhengsj.shuwo.exception.LoginFailedException;
-import top.zhengsj.shuwo.exception.NotLoginException;
+import top.zhengsj.shuwo.exception.*;
 import top.zhengsj.shuwo.pojo.UserEntity;
 import top.zhengsj.shuwo.utils.ShuwoUtil;
 
@@ -48,7 +45,7 @@ public class AddesThread implements Runnable {
                 logger.warn(e);
                 failedCnt++;
                 needRelogin = true;
-            } catch (IOException e) {
+            } catch (IOException | GetSeatIdException e) {
                 logger.error(e);
                 failedCnt++;
             } catch (AddesFailedException | LoginFailedException e) {

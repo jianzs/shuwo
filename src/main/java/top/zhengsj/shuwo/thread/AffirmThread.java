@@ -45,7 +45,7 @@ public class AffirmThread implements Runnable {
                 logger.warn(e);
                 failedCnt++;
                 needRelogin = true;
-            } catch (IOException e) {
+            } catch (IOException | GetSeatIdException e) {
                 logger.error(e);
                 failedCnt++;
             } catch (LoginFailedException | AffirmFailedException e) {

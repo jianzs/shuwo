@@ -2,6 +2,7 @@ package top.zhengsj.shuwo.utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import top.zhengsj.shuwo.contanst.SeatListConst;
 import top.zhengsj.shuwo.exception.*;
 import top.zhengsj.shuwo.pojo.UserEntity;
 
@@ -20,6 +21,7 @@ public class ShuwoUtil {
     private final String AFFIRM_URL = "http://t1.beijingzhangtu.com/api/YySeatAppointment/affirmSeat.html";
     private final String RELEASE_URL = "http://t1.beijingzhangtu.com/api/YySeatAppointment/releaseBySelfes.html";
     private final String APPOINTMENT_URL = "http://t1.beijingzhangtu.com/api/YySeatAppointment/getUserAppointmentInfoes.html";
+    private final String SEAT_LIST_URL = "http://t1.beijingzhangtu.com/api/seat/seatView.html";
 
     public void login(UserEntity user)
             throws IOException, IncompleteInfoException, LoginFailedException {
@@ -67,9 +69,8 @@ public class ShuwoUtil {
      *     }
      */
     public void addes(UserEntity user, Date targetDate)
-            throws IncompleteInfoException, NotLoginException, IOException, AddesFailedException {
-        Integer seatId = user.getSeatId();
-        Integer offset = user.getOffset();
+            throws IncompleteInfoException, NotLoginException, IOException, AddesFailedException, GetSeatIdException {
+        Integer seatId = getSeatId(user);
         String userId = user.getUserId();
         String token = user.getToken();
 
@@ -84,7 +85,7 @@ public class ShuwoUtil {
         body.put("appointmentStartTime", "05:40");
         body.put("appointmentEndTime", "06:40");
         body.put("appointmentDay", getFormatDate(targetDate));
-        body.put("seatid", offset + seatId);
+        body.put("seatid", seatId);
         body.put("libraryid", "10000");
         body.put("userid", userId);
         body.put("token", token);
@@ -112,9 +113,8 @@ public class ShuwoUtil {
      *
      */
     public void affirm(UserEntity user)
-            throws IncompleteInfoException, NotLoginException, IOException, AffirmFailedException {
-        Integer seatId = user.getSeatId();
-        Integer offset = user.getOffset();
+            throws IncompleteInfoException, NotLoginException, IOException, AffirmFailedException, GetSeatIdException {
+        Integer seatId = getSeatId(user);
         String userId = user.getUserId();
         String deviceId = user.getDeviceId();
         String token = user.getToken();
@@ -132,7 +132,7 @@ public class ShuwoUtil {
 
         Map<String, Object> body = new HashMap<>();
         body.put("ibeaconBatteryJson", "[{\"remainingBattery\":100,\"serialNumber\":\"1918FC03DBE9\"},{\"remainingBattery\":100,\"serialNumber\":\"1918FC03DB99\"}]");
-        body.put("seatid", offset + seatId);
+        body.put("seatid", seatId);
         body.put("userid", userId);
         body.put("libraryid", "10000");
         body.put("token", token);
@@ -200,7 +200,7 @@ public class ShuwoUtil {
         if (userId == null || token == null) {
             throw  new NotLoginException(user.toString());
         }
-System.currentTimeMillis();
+
         Map<String, Object> body = new HashMap<>();
         body.put("libraryid", "10000");
         body.put("userid", userId);
@@ -234,6 +234,46 @@ System.currentTimeMillis();
 //                user.setNewSeatAppointmentId(String.valueOf(data.getJSONObject(i).getInt("keyid")));
 //            }
         }
+    }
+
+
+    private Integer getSeatId(UserEntity user)
+            throws NotLoginException, IOException, GetSeatIdException {
+        JSONArray seatList = SeatListConst.getSeatList(user.getRoomId());
+        if (seatList == null) {
+            String userId = user.getUserId();
+            String token = user.getToken();
+            if (userId == null || token == null) {
+                throw  new NotLoginException(user.toString());
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("todayOrTomorrow", "tomorrow");
+            params.put("libraryId", "10000");
+            params.put("roomId", user.getRoomId());
+            params.put("token", token);
+
+            HttpRequest httpRequest = new HttpRequest();
+            JSONObject response = httpRequest.sendGet(SEAT_LIST_URL, params);
+
+            Integer code = response.getInt("code");
+            if (!code.equals(1)) {
+                throw new GetSeatIdException(user.toString() + "\n" + response);
+            }
+
+            JSONObject data = response.getJSONObject("data");
+            seatList = data.getJSONArray("seatList");
+
+            SeatListConst.setSeatList(user.getRoomId(), seatList);
+        }
+
+        for (int i = 0, len = seatList.length(); i < len; i++) {
+            JSONObject seat = seatList.getJSONObject(i);
+            if (Integer.valueOf(seat.getString("number")).equals(user.getSeatId())) {
+                return seat.getInt("keyid");
+            }
+        }
+        return -1;
     }
 
     private String getFormatDate(Date targetDate) {
