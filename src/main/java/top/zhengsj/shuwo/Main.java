@@ -14,7 +14,7 @@ public class Main {
         System.out.println("Start Successfully!");
 
         Timer addTimer = new Timer();
-        addTimer.schedule(new AddesTimerTask(), getTime(11, 52, 35), PERIOD_DAY);
+        addTimer.schedule(new AddesTimerTask(), getTime(20, 0, 0), PERIOD_DAY);
 
         Timer affirmTimer = new Timer();
         affirmTimer.schedule(new AffirmTimerTask(), getTime(8, 10, 0), PERIOD_DAY);
